@@ -54,8 +54,9 @@ class ArticlesController extends Controller
       $article->post_on = $request->post_on;
       $article->save();
       */
-
+      //dd($request->all());
       Article::create($request->all());
+      return redirect('/articles');
 
       // DB::table('articles')->insert($request->except('_token'));
 
@@ -102,7 +103,12 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $article = Article::findOrFail($id);
+      if (!isset($request->live))
+        $article->update(array_merge($request->all(), ['live' => false]));
+      else
+        $article->update($request->all());
+      return redirect('/articles');
     }
 
     /**
