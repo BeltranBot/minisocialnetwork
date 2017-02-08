@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\softDeletes;
 
 class Article extends Model
 {
+  use SoftDeletes;
   protected $table = 'articles';
 
   protected $fillable = [
@@ -15,7 +17,7 @@ class Article extends Model
 
   // protected $guarded = ['id'];
 
-  protected $dates = ['post_on'];
+  protected $dates = ['post_on', 'deleted_at'];
 
   public function setLiveAttribute ($value)
   {

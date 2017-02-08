@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreatePostsTable extends Migration
 {
     /**
@@ -17,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->text('content');
             $table->integer('user_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

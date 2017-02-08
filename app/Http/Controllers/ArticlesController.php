@@ -17,6 +17,8 @@ class ArticlesController extends Controller
     public function index()
     {
       $articles = Article::paginate(10);
+      // $articles = Article::withTrashed()->paginate(10); // Too query the soft deleted items too
+      // $articles = Article::onlyTrashed()->paginate(10); // Too query only the soft deleted items
       // $articles = DB::table('articles')->get();
       // $articles = Article::whereLive(true)->get();
       // $articles = DB::table('articles')->whereLive(true)->get();
@@ -119,6 +121,17 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+      // $article = Article::findOrfail($id);
+      // $article->delete();
+      Article::destroy($id);
+      // $article->forceDelete(); // forcefully deletes the article even if is marked as softdelete
+
+      return redirect('/articles');
+    }
+
+    public function restore($id)
+    {
+      $article = Article::findOrFail($id);
+      $article->restore();
     }
 }

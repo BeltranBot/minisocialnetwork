@@ -14,6 +14,14 @@
             <a href="/articles/{{ $article->id }}">Read more</a>
           </div>
           <div class="panel-footer clearfix" style='background-color: white'>
+            @if ($article->user_id == Auth::id())
+              <form class="pull-right" action="/articles/{{ $article->id }}" method="POST"
+                style="margin-left:25px">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            @endif
             <i class="fa fa-heart pull-right"></i>
           </div>
         </div>
